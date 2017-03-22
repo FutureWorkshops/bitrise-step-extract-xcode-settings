@@ -1,0 +1,64 @@
+title: "S3 Download"
+summary: This step allows to download a file from an S3 bucket.
+description: |-
+   This step allows to download a file from an S3 bucket using an Access/secret keypair
+   for authentication.
+website: https://github.com/FutureWorkshops/bitrise-step-s3-download
+source_code_url: https://github.com/FutureWorkshops/bitrise-step-s3-download
+host_os_tags:
+  - osx-10.10
+  - osx-10.9
+project_type_tags:
+  - ios
+  - xamarin
+type_tags:
+  - xcode
+is_requires_admin_user: true
+is_always_run: false
+is_skippable: false
+deps:
+run_if: ""
+inputs:
+  - xcode_project_path: ''
+    opts:
+      title: "Xcodeproj path"
+      summary: The path to the .xcodeproj file.
+      description: This is the AWS Access key of an user with read permission to the S3 bucket/file.
+      is_expand: true
+      is_required: true
+      value_options: []
+  - target: ''
+    opts:
+      title: "Target name"
+      summary: "The name of the project's target. Case sensitive."
+      description: "The name of the project's target."
+      is_expand: true
+      is_required: true
+      value_options: []
+  - configuration: 'Release'
+    opts:
+      title: "Configuration name"
+      summary: The name of the project configuration. Case sensitive.
+      description: "The name of the project configuration: usually either Debug or Release."
+      is_expand: true
+      is_required: true
+      value_options: []
+  - xcode_setting_key: ''
+    opts:
+      title: "Setting name"
+      summary: The name of the project setting to extract. Case sensitive.
+      description: "The name of the project setting as defined in the project.pbxproj file (for example: PROJECT_BUNDLE_IDENTIFIER for the bundle ID)"
+      is_expand: true
+      is_required: true
+      value_options: []
+  - target_variable: 'XCODE_SETTING'
+    opts:
+      title: "Target env variable"
+      summary: "Environment variable to set to the setting's value."
+      description:  "The name of the environment variable to set to the value of the setting specified by 'xcode_setting_key'"
+      is_expand: true
+      is_required: true
+      value_options: []
+
+outputs:
+ 
