@@ -23,8 +23,8 @@ workflows:
         - xcode_project_path: "fixture/Test/Test.xcodeproj"
         - target: Test
         - configuration: Release
-        - xcode_setting_key: PRODUCT_BUNDLE_IDENTIFIER
-        - target_variable: BUNDLE_ID
+        - xcode_setting_key: PRODUCT_BUNDLE_IDENTIFIER | LD_RUNPATH_SEARCH_PATHS
+        - target_variable: BUNDLE_ID  | SEARCH_PATH
           
   # ----------------------------------------------------------------
   # --- workflows to Share this step into a Step Library

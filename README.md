@@ -1,5 +1,5 @@
 # Extract Xcode settings
-This step exports to an environment variable any project settings of an Xcode project.
+This step reads to an environment variable any Xcode project's project setting.
 
 
 ## How to use this Step

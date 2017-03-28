@@ -4,6 +4,9 @@ THIS_SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 set -e
 
+old_ifs=$IFS
+
+
 #=======================================
 # Functions
 #=======================================
@@ -24,6 +27,7 @@ function echo_fail {
 	msg=$1
 	echo
 	color_echo "${RED}" "${msg}"
+  IFS=$old_ifs
 	exit 1
 }
 
@@ -75,10 +79,22 @@ function validate_required_input_with_options {
 	fi
 }
 
+function validate_same_number_of_values {
+  key1=$1
+  key2=$2
+  size1=$3
+  size2=$4
+  [ $size1 == $size2 ] || echo_fail "Invalid input: $key1 and $key2 must have the same number of values"
+}
+
+function trim_string {
+  result=`echo -n $1 | xargs`
+  echo $result
+}
+
 #=======================================
 # Main
 #=======================================
-
 #
 # Validate parameters
 echo_info "Configs:"
@@ -94,6 +110,12 @@ validate_required_input "configuration" $configuration
 validate_required_input "xcode_setting_key" $xcode_setting_key
 validate_required_input "target_variable" $target_variable
 
+IFS="|"
+keys=($xcode_setting_key)
+targets=($target_variable)
+unset IFS
+
+validate_same_number_of_values "xcode_setting_key" "target_variable" ${#keys[@]} ${#targets[@]}
 # this expansion is required for paths with ~
 #  more information: http://stackoverflow.com/questions/3963716/how-to-manually-expand-a-special-variable-ex-tilde-in-bash
 eval expanded_xcode_project_path="${xcode_project_path}"
@@ -104,20 +126,20 @@ fi
 
 echo_info "Installing required gem: xcodeproj_setting"
 gem install xcodeproj_setting
-# if [[ "$aws_region" != "" ]] ; then
-# 	echo_details "AWS region (${aws_region}) specified!"
-# 	export AWS_DEFAULT_REGION="${aws_region}"
-# fi
 
-value=`xcodeproj_setting --path $expanded_xcode_project_path \
-        --target $target \
-        --conf $configuration \
-        --key $xcode_setting_key \
-        --print`
+for (( i=0; i<${#keys[@]}; i++ )); do
+  key=$(trim_string ${keys[i]})
+  target_variable=$(trim_string ${targets[i]})
+  value=`xcodeproj_setting --path $expanded_xcode_project_path \
+          --target $target \
+          --conf $configuration \
+          --key $key \
+          --print`
 
-[ -z "$var" ] && echo_fail "No valid value found for key: '$xcode_setting_key'"
+  [ -z "$value" ] && echo_fail "No valid value found for key: '$key'"
 
-echo_info "Found value of: $value"
-echo_info "Setting environment variable $target_variable to $value"
-envman add --key $target_variable --value $value
+  echo_info "Found value of: '$value' \n Setting environment variable '$target_variable' to '$value'"
+  envman add --key "$target_variable" --value "$value"
+done
 
+IFS=$old_ifs

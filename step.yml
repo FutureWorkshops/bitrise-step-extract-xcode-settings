@@ -1,8 +1,6 @@
-title: "S3 Download"
-summary: This step allows to download a file from an S3 bucket.
-description: |-
-   This step allows to download a file from an S3 bucket using an Access/secret keypair
-   for authentication.
+title: "Extract Xcode settings"
+summary: "This step reads to an environment variable any Xcode project's project setting."
+description: ''
 website: https://github.com/FutureWorkshops/bitrise-step-s3-download
 source_code_url: https://github.com/FutureWorkshops/bitrise-step-s3-download
 host_os_tags:
