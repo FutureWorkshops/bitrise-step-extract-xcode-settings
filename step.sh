@@ -131,7 +131,7 @@ for (( i=0; i<${#keys[@]}; i++ )); do
   key=$(trim_string ${keys[i]})
   target_variable=$(trim_string ${targets[i]})
   value=`xcodeproj_setting --path $expanded_xcode_project_path \
-          --target $target \
+          --target "$target" \
           --conf $configuration \
           --key $key \
           --print`
