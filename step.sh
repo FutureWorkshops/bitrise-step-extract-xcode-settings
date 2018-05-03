@@ -109,6 +109,7 @@ validate_required_input "target" $target
 validate_required_input "configuration" $configuration
 validate_required_input "xcode_setting_key" $xcode_setting_key
 validate_required_input "target_variable" $target_variable
+validate_required_input "xcodeproj_setting repository" $gem_repository
 
 IFS="|"
 keys=($xcode_setting_key)
@@ -124,11 +125,9 @@ if [ ! -e "${expanded_xcode_project_path}/project.pbxproj" ]; then
   echo_fail "No valid Xcode project found at path: ${expanded_xcode_project_path}"
 fi
 
-echo_info "Installing required gem: xcodeproj"
-gem install xcodeproj
-
 echo_info "Installing required gem: xcodeproj_setting"
-gem install xcodeproj_setting
+gem install specific_install
+gem specific_install -l "${gem_repository}"
 
 for (( i=0; i<${#keys[@]}; i++ )); do
   key=$(trim_string ${keys[i]})

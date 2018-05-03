@@ -33,6 +33,14 @@ inputs:
       is_expand: true
       is_required: true
       value_options: []
+  - gem_repository: 'https://github.com/FutureWorkshops/XcodeProjSetting.git'
+    opts:
+      title: "xcodeproj_setting gem repository"
+      summary: "Git repo with the spec for xcodeproj_setting"
+      description: "Git path for the repository with the gemspec for the xcodeproj_setting gem"
+      is_expand: true
+      is_required: true
+      value_options: []
   - configuration: 'Release'
     opts:
       title: "Configuration name"
