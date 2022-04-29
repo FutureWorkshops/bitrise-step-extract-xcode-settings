@@ -14,6 +14,63 @@ workflows:
         inputs:
         - path: ./fixture
         - is_create_path: false
+    - script:
+        title: Reset fields
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -e
+
+            envman unset --key "BUNDLE_ID"
+            envman unset --key "SEARCH_PATH"
+    - path::./:
+        title: Step Test
+        description: ''
+        inputs:
+        - xcode_project_path: "Test/Test.xcodeproj"
+        - target: Test
+        - configuration: Release
+        - xcode_setting_key: PRODUCT_BUNDLE_IDENTIFIER | LD_RUNPATH_SEARCH_PATHS
+        - target_variable: BUNDLE_ID  | SEARCH_PATH
+    - script:
+        title: Validate fields
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -e
+
+            if [[ "${BUNDLE_ID}" == 'test.Test' ]]; then
+              echo "Valid BUNDLE_ID"
+            else
+              echo "Invalid BUNDLE_ID value"
+              exit 1
+            fi
+
+            if [[ "${SEARCH_PATH}" == '$(inherited) @executable_path/Frameworks' ]]; then
+              echo "Valid SEARCH_PATH"
+            else
+              echo "Invalid SEARCH_PATH value"
+              exit 1
+            fi
+    - change-workdir:
+        title: Switch working dir to test / non_gemfile_fixture dir
+        description: |-
+          To prevent step testing issues, like referencing relative
+          files with just './some-file' in the step's code, which would
+          work for testing the step from this directory directly
+          but would break if the step is included in another `bitrise.yml`.
+        inputs:
+        - path: ../non_gemfile_fixture
+        - is_create_path: false
+    - script:
+        title: Reset fields
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -e
+
+            envman unset --key "BUNDLE_ID"
+            envman unset --key "SEARCH_PATH"
     - path::./:
         title: Step Test
         description: ''
