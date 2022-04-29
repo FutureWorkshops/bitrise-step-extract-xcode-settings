@@ -25,6 +25,26 @@ workflows:
         - configuration: Release
         - xcode_setting_key: PRODUCT_BUNDLE_IDENTIFIER | LD_RUNPATH_SEARCH_PATHS
         - target_variable: BUNDLE_ID  | SEARCH_PATH
+    - script:
+        title: Validate fields
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -e
+
+            if [[ "${BUNDLE_ID}" == 'test.Test' ]]; then
+              echo "Valid BUNDLE_ID"
+            else
+              echo "Invalid BUNDLE_ID value"
+              exit 1
+            fi
+
+            if [[ "${SEARCH_PATH}" == '$(inherited) @executable_path/Frameworks' ]]; then
+              echo "Valid SEARCH_PATH"
+            else
+              echo "Invalid SEARCH_PATH value"
+              exit 1
+            fi
           
   # ----------------------------------------------------------------
   # --- workflows to Share this step into a Step Library
