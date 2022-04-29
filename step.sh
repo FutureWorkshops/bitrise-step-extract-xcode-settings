@@ -125,12 +125,12 @@ if [ ! -e "${expanded_xcode_project_path}/project.pbxproj" ]; then
 fi
 
 echo_info "Installing required gem: xcodeproj_setting"
-gem install xcodeproj
+bundle exec gem install xcodeproj
 
 for (( i=0; i<${#keys[@]}; i++ )); do
   key=$(trim_string ${keys[i]})
   target_variable=$(trim_string ${targets[i]})
-  value=`ruby "${THIS_SCRIPT_DIR}/xcodeproj_settings.rb" $expanded_xcode_project_path \
+  value=`bundle exec ruby "${THIS_SCRIPT_DIR}/xcodeproj_settings.rb" $expanded_xcode_project_path \
           "$target" \
           $configuration \
           $key`
