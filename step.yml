@@ -24,7 +24,6 @@ inputs:
       description: This is the AWS Access key of an user with read permission to the S3 bucket/file.
       is_expand: true
       is_required: true
-      value_options: []
   - target: ''
     opts:
       title: "Target name"
@@ -32,15 +31,6 @@ inputs:
       description: "The name of the project's target."
       is_expand: true
       is_required: true
-      value_options: []
-  - gem_repository: 'https://github.com/FutureWorkshops/XcodeProjSetting.git'
-    opts:
-      title: "xcodeproj_setting gem repository"
-      summary: "Git repo with the spec for xcodeproj_setting"
-      description: "Git path for the repository with the gemspec for the xcodeproj_setting gem"
-      is_expand: true
-      is_required: true
-      value_options: []
   - configuration: 'Release'
     opts:
       title: "Configuration name"
@@ -48,7 +38,6 @@ inputs:
       description: "The name of the project configuration: usually either Debug or Release."
       is_expand: true
       is_required: true
-      value_options: []
   - xcode_setting_key: ''
     opts:
       title: "Setting name"
@@ -56,7 +45,6 @@ inputs:
       description: "The name of the project setting as defined in the project.pbxproj file (for example: PROJECT_BUNDLE_IDENTIFIER for the bundle ID)"
       is_expand: true
       is_required: true
-      value_options: []
   - target_variable: 'XCODE_SETTING'
     opts:
       title: "Target env variable"
@@ -64,7 +52,6 @@ inputs:
       description:  "The name of the environment variable to set to the value of the setting specified by 'xcode_setting_key'"
       is_expand: true
       is_required: true
-      value_options: []
 
 outputs:
  
