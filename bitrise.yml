@@ -11,14 +11,12 @@ workflows:
           files with just './some-file' in the step's code, which would
           work for testing the step from this directory directly
           but would break if the step is included in another `bitrise.yml`.
-        run_if: true
         inputs:
         - path: ./fixture
         - is_create_path: false
     - path::./:
         title: Step Test
         description: ''
-        run_if: true
         inputs:
         - xcode_project_path: "Test/Test.xcodeproj"
         - target: Test
