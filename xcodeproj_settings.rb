@@ -8,7 +8,7 @@ def self.get_config_obj(project_filepath, target_name, project_configuration)
         exit -12
     end
 
-    unless File.exists?(project_filepath)
+    unless File.exist?(project_filepath)
         puts "ERROR: The project file '#{project_filepath}' doesn't exist."
         exit -12
     end
